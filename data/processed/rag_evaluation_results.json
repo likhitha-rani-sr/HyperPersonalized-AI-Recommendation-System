@@ -1,0 +1,82 @@
+{
+    "project": "HyperPersonalized AI Recommender System",
+    "week": "Sprint 3 - Week 5",
+    "evaluation": {
+        "rag_relevance": "Retrieved products are filtered using category, brand, color, material, price and semantic similarity.",
+        "hallucination_control": "Product recommendations are generated from retrieved product data. LLM generation is not used to invent products.",
+        "personalization": "Conversation preferences are retained across multi-turn queries.",
+        "conversation_context": "Tested category, color, brand, budget and top-k changes across multiple turns.",
+        "latency": {
+            "average_seconds": 0.068,
+            "maximum_seconds": 0.209,
+            "requirement_seconds": 5,
+            "requirement": "< 5 seconds",
+            "status": "PASS"
+        }
+    },
+    "test_results": [
+        {
+            "test_type": "independent",
+            "query": "I want a modern grey chair under 15000",
+            "response_time_seconds": 0.209,
+            "products_returned": 5,
+            "answer": "The Nilkamal Wood Chair from Nilkamal matches your grey chair request and is priced at ₹7729, within your ₹15000 budget."
+        },
+        {
+            "test_type": "independent",
+            "query": "I want a wooden table under 10000",
+            "response_time_seconds": 0.052,
+            "products_returned": 5,
+            "answer": "The Godrej Wood Table from Godrej matches your table request and is priced at ₹6961, within your ₹10000 budget."
+        },
+        {
+            "test_type": "independent",
+            "query": "I want black sofas under 30000",
+            "response_time_seconds": 0.056,
+            "products_returned": 5,
+            "answer": "The Urban Living Fabric Sofa from Urban Living matches your black sofa request and is priced at ₹24063, within your ₹30000 budget."
+        },
+        {
+            "test_type": "independent",
+            "query": "I want a luxury bed above 20000",
+            "response_time_seconds": 0.051,
+            "products_returned": 5,
+            "answer": "The IKEA Engineered Wood Bed from IKEA matches your bed request and is priced at ₹28625."
+        },
+        {
+            "test_type": "independent",
+            "query": "I want an IKEA table under 20000",
+            "response_time_seconds": 0.049,
+            "products_returned": 5,
+            "answer": "The IKEA Metal Table from IKEA matches your table request and is priced at ₹7269, within your ₹20000 budget."
+        },
+        {
+            "test_type": "multi_turn",
+            "query": "I want black sofas under 30000",
+            "response_time_seconds": 0.05,
+            "products_returned": 5,
+            "answer": "The Urban Living Fabric Sofa from Urban Living matches your black sofa request and is priced at ₹24063, within your ₹30000 budget."
+        },
+        {
+            "test_type": "multi_turn",
+            "query": "Only IKEA",
+            "response_time_seconds": 0.048,
+            "products_returned": 5,
+            "answer": "The IKEA Leather Sofa from IKEA matches your black sofa request and is priced at ₹24067, within your ₹30000 budget."
+        },
+        {
+            "test_type": "multi_turn",
+            "query": "Make it under 20000",
+            "response_time_seconds": 0.047,
+            "products_returned": 1,
+            "answer": "The IKEA Fabric Sofa from IKEA matches your black sofa request and is priced at ₹15443, within your ₹20000 budget."
+        },
+        {
+            "test_type": "multi_turn",
+            "query": "Show only 3",
+            "response_time_seconds": 0.048,
+            "products_returned": 1,
+            "answer": "The IKEA Fabric Sofa from IKEA matches your black sofa request and is priced at ₹15443, within your ₹20000 budget."
+        }
+    ]
+}
