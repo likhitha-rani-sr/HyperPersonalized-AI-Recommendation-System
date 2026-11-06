@@ -1,0 +1,5 @@
+model,k,precision,recall
+all-MiniLM-L6-v2,5,1.0,0.03144698554350576
+all-MiniLM-L6-v2,10,1.0,0.06289397108701152
+all-mpnet-base-v2,5,1.0,0.03144698554350576
+all-mpnet-base-v2,10,0.9995,0.06286063775367819
