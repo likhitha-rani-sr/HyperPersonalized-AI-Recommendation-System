@@ -1,13 +1,10 @@
 # Hyper-Personalized AI Recommendation System
 
 ## 1. Project Overview
-
 The Hyper-Personalized AI Recommendation System is an AI-powered furniture recommendation application designed to provide personalized product suggestions using user interactions, product information, semantic similarity, machine learning, and conversational AI.
-
 The system helps users discover furniture based on category, brand, material, color, style, and budget.
 
 ## 2. Objectives
-
 - Recommend relevant furniture products.
 - Apply collaborative filtering using Alternating Least Squares (ALS).
 - Generate semantic product embeddings and store them in ChromaDB.
@@ -17,7 +14,6 @@ The system helps users discover furniture based on category, brand, material, co
 - Evaluate recommendation quality and response performance.
 
 ## 3. Technology Stack
-
 - **Language:** Python
 - **Dashboard:** Streamlit
 - **API:** FastAPI
@@ -29,7 +25,6 @@ The system helps users discover furniture based on category, brand, material, co
 - **Evaluation:** Precision@K, NDCG@K, and simulated A/B testing
 
 ## 4. System Architecture
-
 1. Product data and user interactions are loaded.
 2. Data preprocessing prepares the recommendation inputs.
 3. The collaborative filtering model learns from user interactions.
@@ -41,7 +36,6 @@ The system helps users discover furniture based on category, brand, material, co
 9. The Streamlit dashboard provides model selection, filters, recommendations, chat, and experiment results.
 
 ## 5. Project Structure
-
 ```text
 HyperPersonalizedAIRecommendationSystem/
 │
@@ -50,7 +44,9 @@ HyperPersonalizedAIRecommendationSystem/
 │   └── User interaction data
 │
 ├── embeddings/
-│   ├── product_embeddings.npy
+│   ├── evaluation/
+│   │   ├── embedding_evaluation_results.xlsx
+│   │   └── pca_info
 │   └── embedding_metadata.json
 │
 ├── models/
@@ -99,11 +95,11 @@ HyperPersonalizedAIRecommendationSystem/
 │
 ├── ecommerce.db
 ├── run_dashboard.py
+├── requirements.txt
 └── README.md
 ```
 
 ### Main Components
-
 - **Data processing:** ETL, data cleaning, interaction matrices, and feature engineering.
 - **Collaborative filtering:** ALS-based user-item recommendations.
 - **Content-based recommendations:** Sentence embeddings and ChromaDB similarity search.
@@ -115,74 +111,57 @@ HyperPersonalizedAIRecommendationSystem/
 - **Experimentation:** Simulated A/B testing and saved experiment results.
 The listed files represent the main project components; additional modules and generated artifacts may exist.
 
+
+### Embeddings and Vector Database
+The project uses Sentence Transformers to generate semantic
+representations of furniture products.
+Embedding metadata and evaluation results are included
+in the repository.
+Generated NumPy embedding arrays and the ChromaDB
+database are excluded from GitHub because they can
+be regenerated using the project scripts.
+The vector database must be initialized before using
+semantic retrieval and conversational RAG features.
+
 ## 6. Installation and Setup
+### Prerequisites
+- Python installed
+- Git installed (optional if downloading ZIP)
+- Ollama installed for local conversational AI functionality
 
-Prerequisites: Python and the project dependencies installed in a virtual environment. Ollama and the configured language model are required for local LLM functionality.
-
-Open PowerShell in the project directory:
-
-```powershell
-cd D:\HyperPersonalizedAIRecommendationSystem
-```
-
-Activate the virtual environment:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Install dependencies if a valid requirements file is available:
-
-```powershell
+### Step 1: Download the project
+Download the repository ZIP from GitHub and extract it.
+### Step 2: Open the project folder
+cd HyperPersonalizedAIRecommendationSystem
+### Step 3: Create a virtual environment
+python -m venv .venv
+### Step 4: Activate the environment
+.venv\Scripts\activate
+### Step 5: Install dependencies
 pip install -r requirements.txt
-```
-
-Ensure Ollama is installed and the configured model is available before testing conversational generation.
+### Step 6: Configure the required datasets,
+database, embeddings and ChromaDB vector store.
+Follow the data preparation and regeneration instructions
+provided in the project.
 
 ## 7. Running the Application
-
-Start the integrated dashboard and API using:
-
-```powershell
+Activate the virtual environment and run:
 python run_dashboard.py
-```
-
-The launcher waits up to two minutes for the FastAPI health check and reports
-the last health-check error if the API does not become ready. Pressing Ctrl+C
-also stops any services the launcher started.
-
-The currently configured local addresses are:
-
-- **Main dashboard:** http://127.0.0.1:8502
-- **FastAPI documentation:** http://127.0.0.1:8000/docs
-- **API health check:** http://127.0.0.1:8000/health
-
-If running the standalone chatbot separately is necessary:
-
-```powershell
-streamlit run src/chatbot_ui.py --server.port 8503
-```
-
-Use the main dashboard when testing the integrated conversational panel.
+Alternatively, on Windows:
+.\.venv\Scripts\python.exe run_dashboard.py
 
 ## 8. Recommendation Methods
-
 ### Popularity-Based Recommendation
 Uses product interaction frequency as a baseline.
-
 ### Collaborative Filtering
 Uses an ALS model trained on user-product interactions.
-
 ### Content-Based Recommendation
 Uses semantic embeddings and ChromaDB similarity search.
-
 ### Hybrid Recommendation
 Combines collaborative, content-based, and ranking signals.
-
 ### Conversational Recommendation
 Processes natural-language requests and retrieves relevant furniture products through the configured RAG pipeline. Dining-table requests map to the catalog's broader `table` category because the catalog does not distinguish dining tables as a separate category. New general-furniture requests clear stale category and product filters; a previously specified budget is retained when the user refers to "my budget." Follow-up turns retain applicable preferences, support brand exclusions such as "not IKEA" or "other than IKEA," and normalize common wardrobe misspellings such as "waardroop."
 After a no-match response, repeating only the same category (for example, "sofa") retries that category without inherited filters.
-
 If requested category, color, material, or brand filters produce no exact
 matches, the chatbot first reports that no exact matches were found, then may
 show products in a separate **Alternative suggestions** section and disclose
